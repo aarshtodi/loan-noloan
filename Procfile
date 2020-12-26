@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlt run loan-noloan.py
+web: sh setup.sh && streamlit run loan-noloan.py 
