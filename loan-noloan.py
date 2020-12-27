@@ -4,7 +4,6 @@ import numpy as np
 import joblib
 from xgboost import XGBClassifier
 
-st.set_option('deprecation.showfileUploaderEncoding', False)
 st.write("""
 # Loan or No Loan?
 """)
