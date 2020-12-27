@@ -4,16 +4,13 @@ import numpy as np
 import joblib
 from xgboost import XGBClassifier
 
-load_clf = joblib.load('loan.pkl')
+st.set_option('deprecation.showfileUploaderEncoding', False)
+st.write("""
+# Loan or No Loan?
+""")
+st.write('---')
 
-def run():
-
-    st.sidebar.info('A loan application is used by borrowers to apply for a loan. Through the loan application, borrowers reveal key details about their finances to the lender. The loan application is crucial to determining whether the lender will grant the request for funds or credit.This app automates the entire process.')
-    st.sidebar.write('---')
-
-    st.title("Loan or No Loan?")
-    st.write('---')
-
+def user_input_features():
     loanid = st.text_input('ENTER LOANID')
     income = st.number_input('ENTER APPLICANT\'S INCOME')
     coincome = st.number_input('ENTER CO-APPLICANT\'S INCOME')
@@ -54,7 +51,7 @@ def run():
         urban = 0
         surban = 1
 
-    input_dict = {'Dependents': dependent,
+    input_data = {'Dependents': dependent,
             'ApplicantIncome': income,
             'CoapplicantIncome': coincome,
             'LoanAmount': loanamt,
@@ -68,15 +65,21 @@ def run():
             'Property_Area_Rural': rural,
             'Property_Area_Semiurban': surban,
             'Property_Area_Urban': urban}
-    input_df = pd.DataFrame([input_dict])
+    features = pd.DataFrame(input_data, index=[0])
+    return features
 
-    if st.button("Predict"):
-        output = load_clf.predict(input_df)
-        if(output == 1):
-            out = "APPROVED"
-        else:
-            out = "REJECTED"
-        st.success(out)
+input_df = user_input_features()
 
-if __name__ == '__main__':
-    run()
+load_clf = joblib.load('loan.pkl')
+
+prediction = load_clf.predict(input_df)
+
+if st.button("Predict"):
+    output = load_clf.predict(input_df)
+    if(output == 1):
+        out = 'LOAN APPLICATION APPROVED'
+    else:
+        out = 'LOAN APPLICATION REJECTED'
+    st.success(out)
+
+st.write('---')
