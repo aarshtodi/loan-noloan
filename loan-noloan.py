@@ -80,6 +80,6 @@ if st.button("Predict"):
         out = 'LOAN APPLICATION APPROVED'
     else:
         out = 'LOAN APPLICATION REJECTED'
-    st.success(out)
+st.success(out)
 
 st.write('---')
