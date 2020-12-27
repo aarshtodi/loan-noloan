@@ -72,8 +72,6 @@ input_df = user_input_features()
 
 load_clf = joblib.load('loan.pkl')
 
-prediction = load_clf.predict(input_df)
-
 if st.button("Predict"):
     output = load_clf.predict(input_df)
     if(output == 1):
